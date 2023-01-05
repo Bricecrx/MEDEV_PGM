@@ -74,7 +74,7 @@ public class ImagePgm {
         File file = new File(path);
         String line;
         String[] lineSplitted = null;
-        try (Scanner myReader = new Scanner(file)) {
+        try ( Scanner myReader = new Scanner(file)) {
             // Traitement de l'entête
             myReader.nextLine();
             myReader.nextLine();
@@ -98,11 +98,10 @@ public class ImagePgm {
 
             lineSplitted = line.split("\\s+");
             ////////////////////////////////////////////////////////
-        
-        }catch (IOException e){
+
+        } catch (IOException e) {
             System.out.println("Le chemin du fichier ne mène à rien");
         }
-        
 
         // Recupération des pixels dans le tableau
         int k = 0;
@@ -113,8 +112,14 @@ public class ImagePgm {
         for (int i = 0; i < height; i++) {
             list = new ArrayList();
             for (int j = 0; j < width; j++) {
-                list.add(Integer.parseInt(lineSplitted[k]));
-                k++;
+                if (lineSplitted[k] != null) {
+                    list.add(Integer.parseInt(lineSplitted[k]));
+                    k++;
+                }
+                else {
+                    System.out.println("Un pointeur nul a été détecté au niveau " + k + " de la ligne splittée.");
+                }
+
             }
             image.add(list);
         }
@@ -184,7 +189,6 @@ public class ImagePgm {
         return image;
     }
 
-   
     /**
      * Crée une nouvelle image pgm à partir de l'objet courant
      *
@@ -218,37 +222,34 @@ public class ImagePgm {
 
         // Ecriture dans le fichier
         try {
-            // Ecriture entête
-            FileWriter imageWriter = new FileWriter(path);
-            imageWriter.write("P2" + retourAlaLigne);
-            imageWriter.write("#" + retourAlaLigne);
-            imageWriter.write(this.width + "  " + this.height + retourAlaLigne);
-            imageWriter.write("255" + retourAlaLigne);
+            try ( // Ecriture entête
+                     FileWriter imageWriter = new FileWriter(path)) {
+                imageWriter.write("P2" + retourAlaLigne);
+                imageWriter.write("#" + retourAlaLigne);
+                imageWriter.write(this.width + "  " + this.height + retourAlaLigne);
+                imageWriter.write("255" + retourAlaLigne);
+                // Ecriture pixels
+                String line = "";
+                int i, j;
+                for (int k = 0; k < this.width * this.height; k++) {
+                    i = k / this.width;
+                    j = k % this.width;
 
-            // Ecriture pixels
-            String line = "";
-            int i, j;
+                    if (line.length() > 45) {   // On rentre la ligne dans le fichier avant quelle ne soit trop longue
+                        line += retourAlaLigne;
+                        imageWriter.write(line);
+                        line = "";
+                    }
+                    // On ajoute le prochain pixel à la ligne
+                    line += Integer.toString(this.getImage().get(i).get(j)) + "  ";
 
-            for (int k = 0; k < this.width * this.height; k++) {
-                i = k / this.width;
-                j = k % this.width;
-
-                if (line.length() > 45) {   // On rentre la ligne dans le fichier avant quelle ne soit trop longue
-                    line += retourAlaLigne;
-                    imageWriter.write(line);
-                    line = "";
                 }
-                // On ajoute le prochain pixel à la ligne
-                line += Integer.toString(this.getImage().get(i).get(j)) + "  ";
-
             }
-            imageWriter.close();
         } catch (IOException e) {
             System.out.println("Une erreur a eu lieu lors de l'écriture dans le fichier");
         }
     }
 
-    
     //Fonctions de seuillage...
     /**
      * Modifie l'image en rendant noirs les pixels dont la valeur est
@@ -296,11 +297,12 @@ public class ImagePgm {
 
     /**
      * Agrandit l'image d'un facteur multiplicateur
+     *
      * @param multiplicateur
      */
     public void agrandissement(int multiplicateur) {
         List<List<Integer>> newImg = new ArrayList();
-        
+
         //Pour chaque ligne de l'image de base
         for (int i = 0; i < height; i++) {
             //On crée multiplicateur * la même ligne
@@ -316,32 +318,33 @@ public class ImagePgm {
                 newImg.add(row);
             }
         }
-        
+
         //On modifie maintenant correctement l'image
         width *= multiplicateur;
         height *= multiplicateur;
         image = newImg;
     }
-    
+
     /**
-     *  Retrecit l'image d'un diviseur diviseur
+     * Retrecit l'image d'un diviseur diviseur
+     *
      * @param diviseur
      */
     public void retrecissement(int diviseur) {
         List<List<Integer>> newImg = new ArrayList();
-        
+
         //Création de la nouvelle image
-        for (int i = 0; i<height; i+= diviseur) {
+        for (int i = 0; i < height; i += diviseur) {
             List<Integer> row = new ArrayList();
-            for (int j=0; j< width; j+=diviseur) {
+            for (int j = 0; j < width; j += diviseur) {
                 row.add(image.get(i).get(j));
             }
             newImg.add(row);
         }
-        
+
         //Modification de l'image avec les bonnes valeurs
-        height = (int)(height/diviseur);
-        width = (int)(width/diviseur);
+        height = (int) (height / diviseur);
+        width = (int) (width / diviseur);
         image = newImg;
     }
 
