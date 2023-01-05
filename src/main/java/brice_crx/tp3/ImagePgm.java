@@ -112,7 +112,7 @@ public class ImagePgm {
         for (int i = 0; i < height; i++) {
             list = new ArrayList();
             for (int j = 0; j < width; j++) {
-                if (lineSplitted[k] != null) {
+                if (lineSplitted.length < k) {
                     list.add(Integer.parseInt(lineSplitted[k]));
                     k++;
                 }
