@@ -73,7 +73,7 @@ public class ImagePgm {
         // Lecture du fichier pgm
         File file = new File(path);
         String line;
-        String[] lineSplitted = null;
+        String[] lineSplitted = {};
         try ( Scanner myReader = new Scanner(file)) {
             // Traitement de l'entête
             myReader.nextLine();
