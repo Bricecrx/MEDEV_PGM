@@ -1,0 +1,40 @@
+-------------------------------------------------------------------------------
+Test set: brice_crx.tp3.ImagePgmTest
+-------------------------------------------------------------------------------
+Tests run: 12, Failures: 6, Errors: 0, Skipped: 0, Time elapsed: 0.033 sec <<< FAILURE!
+brice_crx.tp3.ImagePgmTest.testSeuil()  Time elapsed: 0.017 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "brice_crx.tp3.ImagePgm.seuil(int)" because "instance" is null
+	at brice_crx.tp3.ImagePgmTest.testSeuil(ImagePgmTest.java:131)
+
+brice_crx.tp3.ImagePgmTest.testRetrecissement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "brice_crx.tp3.ImagePgm.retrecissement(int)" because "instance" is null
+	at brice_crx.tp3.ImagePgmTest.testRetrecissement(ImagePgmTest.java:170)
+
+brice_crx.tp3.ImagePgmTest.testGetImage()  Time elapsed: 0.003 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: The test case is a prototype.
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:39)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:109)
+	at brice_crx.tp3.ImagePgmTest.testGetImage(ImagePgmTest.java:120)
+
+brice_crx.tp3.ImagePgmTest.testDifference()  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "brice_crx.tp3.ImagePgm.difference(brice_crx.tp3.ImagePgm)" because "instance" is null
+	at brice_crx.tp3.ImagePgmTest.testDifference(ImagePgmTest.java:144)
+
+brice_crx.tp3.ImagePgmTest.testAgrandissement()  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.NullPointerException: Cannot invoke "brice_crx.tp3.ImagePgm.agrandissement(int)" because "instance" is null
+	at brice_crx.tp3.ImagePgmTest.testAgrandissement(ImagePgmTest.java:157)
+
+brice_crx.tp3.ImagePgmTest.testSetPgmExtension()  Time elapsed: 0.003 sec  <<< FAILURE!
+java.lang.StringIndexOutOfBoundsException: Range [-3, 0) out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:55)
+	at java.base/jdk.internal.util.Preconditions$1.apply(Preconditions.java:52)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:213)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:210)
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:98)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckFromToIndex(Preconditions.java:112)
+	at java.base/jdk.internal.util.Preconditions.checkFromToIndex(Preconditions.java:349)
+	at java.base/java.lang.String.checkBoundsBeginEnd(String.java:4589)
+	at java.base/java.lang.String.substring(String.java:2703)
+	at brice_crx.tp3.ImagePgm.setPgmExtension(ImagePgm.java:355)
+	at brice_crx.tp3.ImagePgmTest.testSetPgmExtension(ImagePgmTest.java:183)
+
